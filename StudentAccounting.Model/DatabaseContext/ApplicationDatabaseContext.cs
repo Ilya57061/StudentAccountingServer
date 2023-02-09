@@ -21,17 +21,17 @@ namespace StudentAccounting.Model
               .WithMany(r => r.Users)
                 .HasForeignKey(u => u.RoleId);
             modelBuilder.Entity<User>().HasData(
-                new User[]
-                {
-                    new User { Id =1, RoleId = 1, Login = "Stas", PasswordHash = System.Text.Encoding.UTF8.GetBytes("123456"),
-                        PasswordSalt =System.Text.Encoding.UTF8.GetBytes("2427") },
-                    new User { Id =2, RoleId = 3, Login = "Ilya", PasswordHash = System.Text.Encoding.UTF8.GetBytes("12345"),
-                        PasswordSalt =System.Text.Encoding.UTF8.GetBytes("2538")},
-                    new User { Id =3,RoleId = 3, Login = "Pavel", PasswordHash = System.Text.Encoding.UTF8.GetBytes("1234"),
-                        PasswordSalt =System.Text.Encoding.UTF8.GetBytes("151515")},
-                    new User { Id=4,RoleId =4, Login = "Roman", PasswordHash = System.Text.Encoding.UTF8.GetBytes("123"),
-                        PasswordSalt =System.Text.Encoding.UTF8.GetBytes("5515")}
-                });
+            new User[]
+            {
+                new User { Id =1, RoleId = 1, Login = "Stas", PasswordHash = System.Text.Encoding.UTF8.GetBytes("123456"),
+                    PasswordSalt =System.Text.Encoding.UTF8.GetBytes("2427") },
+                new User { Id =2, RoleId = 3, Login = "Ilya", PasswordHash = System.Text.Encoding.UTF8.GetBytes("12345"),
+                    PasswordSalt =System.Text.Encoding.UTF8.GetBytes("2538")},
+                new User { Id =3,RoleId = 3, Login = "Pavel", PasswordHash = System.Text.Encoding.UTF8.GetBytes("1234"),
+                    PasswordSalt =System.Text.Encoding.UTF8.GetBytes("151515")},
+                new User { Id=4,RoleId =4, Login = "Roman", PasswordHash = System.Text.Encoding.UTF8.GetBytes("123"),
+                    PasswordSalt =System.Text.Encoding.UTF8.GetBytes("5515")}
+            });
             modelBuilder.Entity<Role>().HasData(
                 new Role[]
                 {
