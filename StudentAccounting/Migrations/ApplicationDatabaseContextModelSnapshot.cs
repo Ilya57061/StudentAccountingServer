@@ -788,8 +788,6 @@ namespace StudentAccounting.Migrations
                             Id = 4,
                             Name = 4,
                             NormalName = "Local Pm has limited access to one table"
-<<<<<<< HEAD
-=======
                         },
                         new
                         {
@@ -802,7 +800,6 @@ namespace StudentAccounting.Migrations
                             Id = 6,
                             Name = 6,
                             NormalName = "Has access to editing the tables of his department and registration users"
->>>>>>> c06cd29ace6386c3ca78247b270f6701b162fab5
                         });
                 });
 

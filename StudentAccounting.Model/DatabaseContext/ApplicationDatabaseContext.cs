@@ -13,7 +13,7 @@ namespace StudentAccounting.Model
         {
             //Database.EnsureDeleted();
             //Database.EnsureCreated();
-            Database.Migrate();
+            //Database.Migrate();
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -57,13 +57,9 @@ namespace StudentAccounting.Model
                     new Role { Id = 1, Name = RoleType.User, NormalName = RoleDescription.Get(RoleType.User)},
                     new Role { Id = 2, Name = RoleType.Admin, NormalName = RoleDescription.Get(RoleType.Admin) },
                     new Role { Id = 3, Name = RoleType.GlobalPm, NormalName = RoleDescription.Get(RoleType.GlobalPm) },
-<<<<<<< HEAD
-                    new Role { Id = 4, Name = RoleType.LocalPm, NormalName = RoleDescription.Get(RoleType.LocalPm) }
-=======
                     new Role { Id = 4, Name = RoleType.LocalPm, NormalName = RoleDescription.Get(RoleType.LocalPm) },
                     new Role {Id = 5, Name = RoleType.Director, NormalName = RoleDescription.Get(RoleType.Director)},
                     new Role {Id = 6, Name = RoleType.DirectorOrganizational, NormalName = RoleDescription.Get(RoleType.DirectorOrganizational)}
->>>>>>> c06cd29ace6386c3ca78247b270f6701b162fab5
                 });
             //modelBuilder.Entity<Individuals>().HasData(
             //    new Individuals[]

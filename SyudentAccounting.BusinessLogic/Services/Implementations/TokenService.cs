@@ -64,11 +64,8 @@ namespace StudentAccounting.BusinessLogic.Services.Implementations
                 Id = user.Id,
                 Login = user.Login,
                 RoleId = user.RoleId,
-<<<<<<< HEAD
-                Role = new RoleDto { Name=user.Role.Name.ToString()}
-=======
                 Role = new RoleDto { Name = user.Role.Name.ToString() }
->>>>>>> c06cd29ace6386c3ca78247b270f6701b162fab5
+
             };
             return new TokenDto
             {

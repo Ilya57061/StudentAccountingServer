@@ -12,8 +12,8 @@ using StudentAccounting.Model;
 namespace StudentAccounting.Migrations
 {
     [DbContext(typeof(ApplicationDatabaseContext))]
-    [Migration("20230210231734_AddHasData")]
-    partial class AddHasData
+    [Migration("20230211233353_sodau")]
+    partial class sodau
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
