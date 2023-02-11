@@ -1,8 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StudentAccounting.BusinessLogic.Services.Contracts;
+using StudentAccounting.Common.Constants;
 using StudentAccounting.Common.Helpers.Criptography;
 using StudentAccounting.Common.ModelsDto;
 using StudentAccounting.Model;
+using StudentAccounting.Model.DatabaseModels;
 using StudentAccounting.Model.DataBaseModels;
 
 namespace StudentAccounting.BusinessLogic.Services.Implementations
@@ -63,7 +65,11 @@ namespace StudentAccounting.BusinessLogic.Services.Implementations
                 User admin = new User();
                 PasswordHasher.CreatePasswordHash("admin", out byte[] passwordHash, out byte[] passwordSalt);
                 admin.Login = "admin";
+<<<<<<< HEAD
                 admin.RoleId = 2;
+=======
+                admin.RoleId = _context.Roles.FirstOrDefault(x => x.Name == (RoleType)2).Id;
+>>>>>>> c06cd29ace6386c3ca78247b270f6701b162fab5
                 admin.PasswordSalt = passwordSalt;
                 admin.PasswordHash = passwordHash;
                 _context.Users.Add(admin);

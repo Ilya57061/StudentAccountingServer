@@ -17,6 +17,24 @@ namespace StudentAccounting.Model
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder
+            .Entity<Rank>()//Courses == Rank , Students == Bonus
+            .HasMany(c => c.Bonuses)
+            .WithMany(s => s.Ranks)
+            .UsingEntity<RankBonus>(
+               j => j
+                .HasOne(pt => pt.Bonus)
+                .WithMany(t => t.RankBonus)
+                .HasForeignKey(pt => pt.BonusId),
+            j => j
+                .HasOne(pt => pt.Rank)
+                .WithMany(p => p.RankBonus)
+                .HasForeignKey(pt => pt.RankId),
+            j =>
+            {
+                j.HasKey(t => new { t.RankId, t.BonusId });
+                j.ToTable("RankBonus");
+            });
             //modelBuilder.Entity<User>()
             //.HasOne(u => u.Role)
             //  .WithMany(r => r.Users)
@@ -39,7 +57,13 @@ namespace StudentAccounting.Model
                     new Role { Id = 1, Name = RoleType.User, NormalName = RoleDescription.Get(RoleType.User)},
                     new Role { Id = 2, Name = RoleType.Admin, NormalName = RoleDescription.Get(RoleType.Admin) },
                     new Role { Id = 3, Name = RoleType.GlobalPm, NormalName = RoleDescription.Get(RoleType.GlobalPm) },
+<<<<<<< HEAD
                     new Role { Id = 4, Name = RoleType.LocalPm, NormalName = RoleDescription.Get(RoleType.LocalPm) }
+=======
+                    new Role { Id = 4, Name = RoleType.LocalPm, NormalName = RoleDescription.Get(RoleType.LocalPm) },
+                    new Role {Id = 5, Name = RoleType.Director, NormalName = RoleDescription.Get(RoleType.Director)},
+                    new Role {Id = 6, Name = RoleType.DirectorOrganizational, NormalName = RoleDescription.Get(RoleType.DirectorOrganizational)}
+>>>>>>> c06cd29ace6386c3ca78247b270f6701b162fab5
                 });
             //modelBuilder.Entity<Individuals>().HasData(
             //    new Individuals[]
@@ -190,5 +214,6 @@ namespace StudentAccounting.Model
         public DbSet<ScheduleOfСlasses> ScheduleOfСlasses { get; set; }
         public DbSet<RefreshToken> RefreshToken { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<RankBonus> RankBonus { get; set; }
     }
 }

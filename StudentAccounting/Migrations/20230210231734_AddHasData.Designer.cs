@@ -12,8 +12,8 @@ using StudentAccounting.Model;
 namespace StudentAccounting.Migrations
 {
     [DbContext(typeof(ApplicationDatabaseContext))]
-    [Migration("20230209152844_shapshot")]
-    partial class shapshot
+    [Migration("20230210231734_AddHasData")]
+    partial class AddHasData
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,15 +36,20 @@ namespace StudentAccounting.Migrations
                     b.Property<DateTime>("DateEntry")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool?>("IsAccepted")
+                        .HasColumnType("bit");
+
                     b.Property<int>("ParticipantsId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StatusDescription")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("VacancyId")
                         .HasColumnType("int");
-
-                    b.Property<string>("WorkStatus")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -209,8 +214,23 @@ namespace StudentAccounting.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime?>("DateEnd")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateStart")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LectorDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LectorFIO")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Link")
@@ -234,7 +254,7 @@ namespace StudentAccounting.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<double>("Budjet")
+                    b.Property<double?>("Bydget")
                         .HasColumnType("float");
 
                     b.Property<DateTime>("DateEnd")
@@ -250,6 +270,9 @@ namespace StudentAccounting.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<double?>("RatingCoefficient")
+                        .HasColumnType("float");
 
                     b.Property<string>("Responsibilities")
                         .IsRequired()
@@ -284,12 +307,7 @@ namespace StudentAccounting.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RankId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("RankId");
 
                     b.ToTable("Bonuses");
                 });
@@ -413,6 +431,9 @@ namespace StudentAccounting.Migrations
                     b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<double?>("BSR")
+                        .HasColumnType("float");
 
                     b.Property<string>("Contacts")
                         .IsRequired()
@@ -665,6 +686,21 @@ namespace StudentAccounting.Migrations
                     b.ToTable("EducationalPortals");
                 });
 
+            modelBuilder.Entity("StudentAccounting.Model.DatabaseModels.RankBonus", b =>
+                {
+                    b.Property<int>("RankId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BonusId")
+                        .HasColumnType("int");
+
+                    b.HasKey("RankId", "BonusId");
+
+                    b.HasIndex("BonusId");
+
+                    b.ToTable("RankBonus", (string)null);
+                });
+
             modelBuilder.Entity("StudentAccounting.Model.DatabaseModels.RefreshToken", b =>
                 {
                     b.Property<string>("Id")
@@ -730,6 +766,44 @@ namespace StudentAccounting.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = 1,
+                            NormalName = "Application user"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = 2,
+                            NormalName = "User with additional rights"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = 3,
+                            NormalName = "Pm which has limited access to the table"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = 4,
+                            NormalName = "Local Pm has limited access to one table"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = 5,
+                            NormalName = "Has access to editing the tables of his department"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = 6,
+                            NormalName = "Has access to editing the tables of his department and registration users"
+                        });
                 });
 
             modelBuilder.Entity("StudentAccounting.Model.DatabaseModels.ScheduleOfСlasses", b =>
@@ -844,17 +918,6 @@ namespace StudentAccounting.Migrations
                     b.Navigation("StagesOfProject");
                 });
 
-            modelBuilder.Entity("StudentAccounting.Model.DataBaseModels.Bonus", b =>
-                {
-                    b.HasOne("StudentAccounting.Model.DataBaseModels.Rank", "Rank")
-                        .WithMany("Bonus")
-                        .HasForeignKey("RankId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Rank");
-                });
-
             modelBuilder.Entity("StudentAccounting.Model.DataBaseModels.Department", b =>
                 {
                     b.HasOne("StudentAccounting.Model.DataBaseModels.Organization", "Organizations")
@@ -951,6 +1014,25 @@ namespace StudentAccounting.Migrations
                     b.Navigation("Department");
                 });
 
+            modelBuilder.Entity("StudentAccounting.Model.DatabaseModels.RankBonus", b =>
+                {
+                    b.HasOne("StudentAccounting.Model.DataBaseModels.Bonus", "Bonus")
+                        .WithMany("RankBonus")
+                        .HasForeignKey("BonusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("StudentAccounting.Model.DataBaseModels.Rank", "Rank")
+                        .WithMany("RankBonus")
+                        .HasForeignKey("RankId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Bonus");
+
+                    b.Navigation("Rank");
+                });
+
             modelBuilder.Entity("StudentAccounting.Model.DatabaseModels.RefreshToken", b =>
                 {
                     b.HasOne("StudentAccounting.Model.DataBaseModels.User", "User")
@@ -1014,6 +1096,11 @@ namespace StudentAccounting.Migrations
                     b.Navigation("ApplicationsInTheProjects");
                 });
 
+            modelBuilder.Entity("StudentAccounting.Model.DataBaseModels.Bonus", b =>
+                {
+                    b.Navigation("RankBonus");
+                });
+
             modelBuilder.Entity("StudentAccounting.Model.DataBaseModels.Customer", b =>
                 {
                     b.Navigation("Projects");
@@ -1063,7 +1150,7 @@ namespace StudentAccounting.Migrations
 
             modelBuilder.Entity("StudentAccounting.Model.DataBaseModels.Rank", b =>
                 {
-                    b.Navigation("Bonus");
+                    b.Navigation("RankBonus");
                 });
 
             modelBuilder.Entity("StudentAccounting.Model.DataBaseModels.User", b =>

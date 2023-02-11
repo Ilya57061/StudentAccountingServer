@@ -26,6 +26,19 @@ namespace StudentAccounting.Controllers
             }
         }
         [Authorize]
+        [HttpPost("GetScheduleOfClassesForCoursesId")]
+        public ActionResult<IEnumerable<ScheduleOfСlasses>> GetForCoursesId(int coursesId)
+        {
+            try
+            {
+                return Ok(_scheduleOfСlassesService.GetForCoursesId(coursesId));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [Authorize]
         [HttpGet("idScheduleOfСlasses/{id}", Name = "GetScheduleOfСlassesId")]
         public IActionResult Get(int id)
         {
