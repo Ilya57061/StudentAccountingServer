@@ -307,20 +307,6 @@ namespace StudentAccounting.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Bonuses");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            BonusDescription = "Description for Bonus 1",
-                            BonusName = "Bonus 1"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            BonusDescription = "Description for Bonus 2",
-                            BonusName = "Bonus 2"
-                        });
                 });
 
             modelBuilder.Entity("StudentAccounting.Model.DataBaseModels.Customer", b =>
@@ -604,26 +590,6 @@ namespace StudentAccounting.Migrations
                     b.HasIndex("OrganizationId");
 
                     b.ToTable("Ranks");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "Description for Rank 1",
-                            MaxMmr = 1000,
-                            MinMmr = 0,
-                            OrganizationId = 1,
-                            RankName = "Rank 1"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = "Description for Rank 2",
-                            MaxMmr = 2000,
-                            MinMmr = 1001,
-                            OrganizationId = 1,
-                            RankName = "Rank 2"
-                        });
                 });
 
             modelBuilder.Entity("StudentAccounting.Model.DataBaseModels.Student", b =>
@@ -733,20 +699,6 @@ namespace StudentAccounting.Migrations
                     b.HasIndex("BonusId");
 
                     b.ToTable("RankBonus", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            RankId = 2,
-                            BonusId = 1,
-                            Id = 1
-                        },
-                        new
-                        {
-                            RankId = 2,
-                            BonusId = 2,
-                            Id = 2
-                        });
                 });
 
             modelBuilder.Entity("StudentAccounting.Model.DatabaseModels.RefreshToken", b =>

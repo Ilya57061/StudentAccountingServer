@@ -1,24 +1,22 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using StudentAccountin.Model.DatabaseModels;
 using StudentAccounting.BusinessLogic.Services.Contracts;
+using StudentAccounting.Model.DatabaseModels;
+using StudentAccounting.Model.DataBaseModels;
 
 namespace StudentAccounting.Controllers
 {
-    public class EmploymentController : Controller
+    public class RankBonusController : Controller
     {
-        private readonly IEmploymentService _employmentService;
-        public EmploymentController(IEmploymentService employmentService)
-        {
-            _employmentService = employmentService;
-        }
+        private readonly IRankBonusService _rankBonusService;
+        
         [Authorize]
-        [HttpGet("GetEmployments")]
-        public ActionResult<IEnumerable<Employment>> Get()
+        [HttpGet("GetRankBonus")]
+        public ActionResult<IEnumerable<RankBonus>> Get()
         {
             try
             {
-                return Ok(_employmentService.Get());
+                return Ok(_rankBonusService.Get());
             }
             catch (Exception ex)
             {
@@ -26,25 +24,25 @@ namespace StudentAccounting.Controllers
             }
         }
         [Authorize]
-        [HttpGet("idEmployment/{id}", Name = "GetEmploymentId")]
+        [HttpGet("idRankBonus/{id}", Name = "GetRankBonusId")]
         public IActionResult Get(int id)
         {
             try
             {
-                return Ok(_employmentService.Get(id));
+                return Ok(_rankBonusService.Get(id));
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
-        [Authorize(Roles = "Admin,Director,DirectorOrganizational,GlobalPm")]
-        [HttpPost("CreateEmployment")]
-        public IActionResult Create(Employment employment)
+        [Authorize(Roles = "Admin,GlobalPm")]
+        [HttpPost("CreateRankBonus")]
+        public IActionResult Create(RankBonus rankBonus)
         {
             try
             {
-                _employmentService.Create(employment);
+                _rankBonusService.Create(rankBonus);
                 return Ok();
             }
             catch (Exception ex)
@@ -52,13 +50,13 @@ namespace StudentAccounting.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [Authorize(Roles = "Admin,Director,DirectorOrganizational,GlobalPm")]
-        [HttpPut("UpdateEmployment")]
-        public IActionResult Update(Employment employment)
+        [Authorize(Roles = "Admin,GlobalPm")]
+        [HttpPut("UpdateRankBonus")]
+        public IActionResult Update(RankBonus rankBonus)
         {
             try
             {
-                _employmentService.Edit(employment);
+                _rankBonusService.Edit(rankBonus);
                 return Ok();
             }
             catch (Exception ex)
@@ -66,13 +64,13 @@ namespace StudentAccounting.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [Authorize(Roles = "Admin,Director,DirectorOrganizational,GlobalPm")]
-        [HttpDelete("DeleteEmployment")]
+        [Authorize(Roles = "Admin,GlobalPm")]
+        [HttpDelete("DeleteRankBonus")]
         public IActionResult Delete(int id)
         {
             try
             {
-                _employmentService.Delete(id);
+                _rankBonusService.Delete(id);
                 return Ok();
             }
             catch (Exception ex)
@@ -82,3 +80,4 @@ namespace StudentAccounting.Controllers
         }
     }
 }
+
