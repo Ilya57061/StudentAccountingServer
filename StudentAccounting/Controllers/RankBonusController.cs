@@ -9,7 +9,10 @@ namespace StudentAccounting.Controllers
     public class RankBonusController : Controller
     {
         private readonly IRankBonusService _rankBonusService;
-        
+        public RankBonusController(IRankBonusService rankBonusService)
+        {
+            _rankBonusService = rankBonusService;
+        }
         [Authorize]
         [HttpGet("GetRankBonus")]
         public ActionResult<IEnumerable<RankBonus>> Get()
