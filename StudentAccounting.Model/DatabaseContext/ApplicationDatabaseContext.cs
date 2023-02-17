@@ -13,32 +13,43 @@ namespace StudentAccounting.Model
         {
             //Database.EnsureDeleted();
             //Database.EnsureCreated();
+
             //Database.Migrate();
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder
-            .Entity<Rank>()
-            .HasMany(c => c.Bonuses)
-            .WithMany(s => s.Ranks)
-            .UsingEntity<RankBonus>(
-               j => j
-                .HasOne(pt => pt.Bonus)
-                .WithMany(t => t.RankBonus)
-                .HasForeignKey(pt => pt.BonusId),
-            j => j
-                .HasOne(pt => pt.Rank)
-                .WithMany(p => p.RankBonus)
-                .HasForeignKey(pt => pt.RankId),
-            j =>
-            {
-                j.HasKey(t => new { t.RankId, t.BonusId });
-                j.ToTable("RankBonus");
-            });
-            //modelBuilder.Entity<User>()
-            //.HasOne(u => u.Role)
-            //  .WithMany(r => r.Users)
-            //    .HasForeignKey(u => u.RoleId);
+            modelBuilder.Entity<User>()
+            .HasOne(u => u.Role)
+              .WithMany(r => r.Users)
+                .HasForeignKey(u => u.RoleId);
+            modelBuilder.Entity<Role>().HasData(
+                new Role[]
+                {
+                    new Role { Id = 1, Name = RoleType.User, NormalName = RoleDescription.Get(RoleType.User)},
+                    new Role { Id = 2, Name = RoleType.Admin, NormalName = RoleDescription.Get(RoleType.Admin) },
+                    new Role { Id = 3, Name = RoleType.GlobalPm, NormalName = RoleDescription.Get(RoleType.GlobalPm) },
+                    new Role { Id = 4, Name = RoleType.LocalPm, NormalName = RoleDescription.Get(RoleType.LocalPm) },
+                    new Role {Id = 5, Name = RoleType.Director, NormalName = RoleDescription.Get(RoleType.Director)},
+                    new Role {Id = 6, Name = RoleType.DirectorOrganizational, NormalName = RoleDescription.Get(RoleType.DirectorOrganizational)}
+                });
+            //modelBuilder
+            //.Entity<Rank>()
+            //.HasMany(c => c.Bonuses)
+            //.WithMany(s => s.Ranks)
+            //.UsingEntity<RankBonus>(
+            //   j => j
+            //    .HasOne(pt => pt.Bonus)
+            //    .WithMany(t => t.RankBonus)
+            //    .HasForeignKey(pt => pt.BonusId),
+            //j => j
+            //    .HasOne(pt => pt.Rank)
+            //    .WithMany(p => p.RankBonus)
+            //    .HasForeignKey(pt => pt.RankId),
+            //j =>
+            //{
+            //    j.HasKey(t => new { t.RankId, t.BonusId });
+            //    j.ToTable("RankBonus");
+            //});
             //modelBuilder.Entity<User>().HasData(
             //    new User[]
             //    {
